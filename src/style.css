@@ -6,3 +6,36 @@
   margin-top: 60px;
   text-align: center;
 }
+
+.ai-textarea {
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  color: #606266;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 150px;
+  padding: 12px;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.ai-textarea:focus {
+  border-color: #409eff;
+  outline: none;
+}
+
+.ai-textarea-container {
+  position: relative;
+  width: 100%;
+}
+
+.ai-textarea-suggestion {
+  background: transparent;
+  color: #999;
+  font-family: inherit;
+  font-size: inherit;
+  opacity: 0.6;
+  pointer-events: none;
+  position: absolute;
+  white-space: pre;
+}

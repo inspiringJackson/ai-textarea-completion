@@ -1,61 +1,104 @@
-# vite-vanilla-ts-lib-starter
+# AI Textarea Completion
 
-The starter is built on top of Vite 6.x and prepared for writing libraries in TypeScript. It generates a package with support for ESM modules and IIFE.
+一个支持AI补全功能的textarea Web组件。
 
-## Features
+## 特性
 
-- ESM modules
-- IIFE bundle for direct browser support without bundler
-- Typings bundle
-- ESLint - scripts linter
-- Stylelint - styles linter
-- Prettier - formatter
-- Vitest - test framework
-- Husky + lint-staged - pre-commit git hook set up for formatting
+- 基于Web Components，可在任何现代浏览器中使用
+- 支持所有原生textarea属性和方法
+- 支持自定义AI补全提供者
+- 使用Tab键接受补全建议，Esc键取消建议
+- 优雅的补全建议显示
 
-## GitHub Template
-
-This is a template repo. Click the green [Use this template](https://github.com/kbysiec/vite-vanilla-ts-lib-starter/generate) button to get started.
-
-## Clone to local
-
-If you prefer to do it manually with the cleaner git history
+## 安装
 
 ```bash
-git clone https://github.com/kbysiec/vite-vanilla-ts-lib-starter.git
-cd vite-vanilla-ts-lib-starter
-npm i
+npm install ai-textarea-completion
 ```
 
-## Checklist
+## 使用方法
 
-When you use this template, update the following:
+### 基本使用
 
-- Remove `.git` directory and run `git init` to clean up the history
-- Change the name in `package.json` - it will be the name of the IIFE bundle global variable and bundle files name (`.cjs`, `.mjs`, `.iife.js`, `d.ts`)
-- Change the author name in `LICENSE`
-- Clean up the `README` and `CHANGELOG` files
+```html
+<ai-textarea placeholder="开始输入..."></ai-textarea>
+```
 
-And, enjoy 😊
+### 设置自定义补全提供者
 
-## Usage
+```javascript
+class CustomCompletionProvider {
+  async getCompletion(text, cursorPosition) {
+    // 实现你的补全逻辑
+    return '补全建议';
+  }
+}
 
-The starter contains the following scripts:
+const textarea = document.querySelector('ai-textarea');
+textarea.setCompletionProvider(new CustomCompletionProvider());
+```
 
-- `dev` - starts dev server
-- `build` - generates the following bundles: ESM (`.js`) and IIFE (`.iife.js`). The name of bundle is automatically taken from `package.json` name property
-- `test` - starts vitest and runs all tests
-- `test:coverage` - starts vitest and run all tests with code coverage report
-- `lint:scripts` - lint `.ts` files with eslint
-- `lint:styles` - lint `.css` and `.scss` files with stylelint
-- `format:scripts` - format `.ts`, `.html` and `.json` files with prettier
-- `format:styles` - format `.cs` and `.scss` files with stylelint
-- `format` - format all with prettier and stylelint
-- `prepare` - script for setting up husky pre-commit hook
-- `uninstall-husky` - script for removing husky from repository
+## 后端服务配置
 
-## Acknowledgment
+1. 进入test-server目录：
+```bash
+cd test-server
+```
 
-If you found it useful somehow, I would be grateful if you could leave a star in the project's GitHub repository.
+2. 安装依赖：
+```bash
+npm install
+```
 
-Thank you.
+3. 复制环境变量配置文件：
+```bash
+cp .env.example .env
+```
+
+4. 编辑.env文件，设置你的OpenAI API密钥：
+```env
+OPENAI_API_KEY=your_api_key_here
+```
+
+5. 启动服务：
+```bash
+npm run dev
+```
+
+## 事件
+
+组件会触发以下自定义事件：
+
+- `input`: 当文本内容变化时触发
+  ```javascript
+  textarea.addEventListener('input', (e) => {
+    console.log('当前值：', e.detail.value);
+    console.log('光标位置：', e.detail.cursorPosition);
+  });
+  ```
+
+## 开发
+
+1. 克隆仓库：
+```bash
+git clone [repository-url]
+cd ai-textarea-completion
+```
+
+2. 安装依赖：
+```bash
+npm install
+```
+
+3. 启动开发服务器：
+```bash
+npm run dev
+```
+
+## 贡献
+
+欢迎提交Issue和Pull Request！
+
+## 许可
+
+MIT
