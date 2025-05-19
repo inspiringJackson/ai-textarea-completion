@@ -1,4 +1,6 @@
 # AI Textarea Completion | AI文本域自动补全
+[![npm version](https://img.shields.io/npm/v/ai-textarea-completion.svg)](https://www.npmjs.com/package/ai-textarea-completion)
+[![npm downloads](https://img.shields.io/npm/dm/ai-textarea-completion.svg)](https://www.npmjs.com/package/ai-textarea-completion)
 
 [English](#english) | [中文](#chinese)
 
@@ -156,6 +158,7 @@ npm install ai-textarea-completion
 ```
 
 ## 用户使用方法
+
 只需让光标停留原地2秒，自动获取并显示AI生成的补全提示。在PC键盘按Tab键确定，按Esc或移动光标或继续输入就会取消；在移动端软键盘，按空格键确定，移动光标或继续输入就会取消。
 
 ## 配置
