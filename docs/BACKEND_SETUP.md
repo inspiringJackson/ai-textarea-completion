@@ -46,6 +46,7 @@ ARK_MODEL=your-model-name
 | ARK_API_KEY | Your API key | Yes |
 | ARK_BASE_URL | API endpoint URL | No |
 | ARK_MODEL | Model identifier | No |
+>>>>>>> 26ef42d8f4fb8e4ee43e74cf3cb9c0b3a89e3a92
 
 ### Starting the Server
 
