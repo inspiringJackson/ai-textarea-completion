@@ -34,20 +34,45 @@ npm install ai-textarea-completion
 </script>
 
 <!-- Use it in your HTML -->
-<ai-textarea placeholder="Start typing here..."></ai-textarea>
+<ai-textarea apiUrl="Your backend AI request api url"></ai-textarea>
 ```
 
 ## Configuration
 
 ### Basic Props
 
-| Prop        | Type    | Default | Description                |
-| ----------- | ------- | ------- | -------------------------- |
-| placeholder | string  | ""      | Placeholder text           |
-| value       | string  | ""      | Initial text value         |
-| prompt      | string  | ""      | AI writing style prompt    |
-| disabled    | boolean | false   | Disable the textarea       |
-| readonly    | boolean | false   | Make the textarea readonly |
+| Prop             | Type    | Default | Description                |
+| --------------- | ------- | ------- | -------------------------- |
+| placeholder     | string  | ""      | Placeholder text           |
+| value           | string  | ""      | Initial text value         |
+| prompt          | string  | ""      | AI writing style prompt    |
+| disabled        | boolean | false   | Disable the textarea       |
+| readonly        | boolean | false   | Make the textarea readonly |
+| disableAI       | boolean | false   | Disable AI completion      |
+| apiUrl          | string  | ""      | Backend API endpoint URL   |
+| placeholder-style| string  | ""      | Custom placeholder style in JSON format (e.g. '{"color": "#999"}') |
+| suggestion-style | string  | ""      | Custom suggestion style in JSON format (e.g. '{"color": "#666"}') |
+
+### Style Configuration
+
+#### Placeholder Style
+You can customize the placeholder style using the `placeholder-style` attribute. The value should be a JSON string containing CSS properties:
+
+```html
+<ai-textarea
+  placeholder="Start typing here..."
+  placeholder-style='{"color": "#1890ff", "fontWeight": "bold"}'
+></ai-textarea>
+```
+
+#### Suggestion Style
+You can customize the suggestion text style using the `suggestion-style` attribute:
+
+```html
+<ai-textarea
+  suggestion-style='{"color": "#666", "fontStyle": "italic", "backgroundColor": "#f5f5f5"}'
+></ai-textarea>
+```
 
 ### Events
 
@@ -114,20 +139,45 @@ npm install ai-textarea-completion
 </script>
 
 <!-- 在HTML中使用 -->
-<ai-textarea placeholder="在这里开始输入..."></ai-textarea>
+<ai-textarea apiUrl="你的后端请求ai的接口url"></ai-textarea>
 ```
 
 ## 配置
 
 ### 基本属性
 
-| 属性        | 类型    | 默认值 | 说明             |
-| ----------- | ------- | ------ | ---------------- |
-| placeholder | string  | ""     | 占位符文本       |
-| value       | string  | ""     | 初始文本值       |
-| prompt      | string  | ""     | AI写作风格提示词 |
-| disabled    | boolean | false  | 禁用文本域       |
-| readonly    | boolean | false  | 设置为只读       |
+| 属性            | 类型    | 默认值 | 说明             |
+| --------------- | ------- | ------ | ---------------- |
+| placeholder     | string  | ""     | 占位符文本       |
+| value           | string  | ""     | 初始文本值       |
+| prompt          | string  | ""     | AI写作风格提示词 |
+| disabled        | boolean | false  | 禁用文本域       |
+| readonly        | boolean | false  | 设置为只读       |
+| disableAI       | boolean | false  | 禁用AI补全功能   |
+| apiUrl          | string  | ""     | 后端API接口地址  |
+| placeholder-style| string  | ""     | 自定义占位符样式，JSON格式（如：'{"color": "#999"}'）|
+| suggestion-style | string  | ""     | 自定义补全建议文本样式，JSON格式（如：'{"color": "#666"}'）|
+
+### 样式配置
+
+#### 占位符样式
+你可以使用 `placeholder-style` 属性来自定义占位符的样式。该值应为包含 CSS 属性的 JSON 字符串：
+
+```html
+<ai-textarea
+  placeholder="在这里开始输入..."
+  placeholder-style='{"color": "#1890ff", "fontWeight": "bold"}'
+></ai-textarea>
+```
+
+#### 补全建议样式
+你可以使用 `suggestion-style` 属性来自定义补全建议文本的样式：
+
+```html
+<ai-textarea
+  suggestion-style='{"color": "#666", "fontStyle": "italic", "backgroundColor": "#f5f5f5"}'
+></ai-textarea>
+```
 
 ### 事件
 

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI文本域测试</title>
+    <link rel="stylesheet" href="../dist/ai-textarea-completion.css" />
+    <!-- ../../testpublish/node_modules/ai-textarea-completion/dist/ai-textarea-completion.css -->
+    <style>
+      body {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+      .container {
+        margin-top: 2rem;
+      }
+      .demo-section {
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border: 1px solid #eee;
+        border-radius: 8px;
+      }
+      h2 {
+        color: #333;
+        margin-bottom: 1rem;
+      }
+      ai-textarea {
+        width: 100%;
+        min-height: 150px;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        display: block;
+      }
+      .controls {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+      }
+      button {
+        padding: 8px 16px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>AI文本域测试</h1>
+
+      <div class="demo-section">
+        <h2>写作助手</h2>
+        <ai-textarea
+          id="basicDemo"
+          placeholder="开始写作..."
+          prompt=""
+          apiUrl="http://localhost:3000/api/complete"
+        >
+        </ai-textarea>
+        <div class="controls">
+          <button onclick="clearText('basicDemo')">清空内容</button>
+          <label>
+            <input
+              type="checkbox"
+              onchange="toggleAI('basicDemo', this.checked)"
+            />
+            禁用AI补全
+          </label>
+        </div>
+      </div>
+
+      <div class="demo-section">
+        <h2>代码助手</h2>
+        <ai-textarea
+          id="codeDemo"
+          placeholder="开始编写代码..."
+          prompt="你是一个专业的程序员，请帮我补全代码，要符合编程规范。"
+          apiUrl="http://localhost:3000/api/complete"
+        >
+        </ai-textarea>
+      </div>
+
+      <div class="demo-section">
+        <h2>只读模式</h2>
+        <ai-textarea
+          id="readonlyDemo"
+          readonly
+          value="这是一个只读的文本域，无法编辑。"
+          apiUrl="http://localhost:3000/api/complete"
+        >
+        </ai-textarea>
+      </div>
+    </div>
+
+    <script type="module">
+      import "../dist/ai-textarea-completion.js";
+
+      // 工具函数
+      window.clearText = id => {
+        document.getElementById(id).value = "";
+      };
+
+      window.toggleAI = (id, disabled) => {
+        const textarea = document.getElementById(id);
+        if (disabled) {
+          textarea.setAttribute("disableAI", "");
+        } else {
+          textarea.removeAttribute("disableAI");
+        }
+      };
+    </script>
+  </body>
+</html>

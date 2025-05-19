@@ -1,0 +1,37 @@
+# Source
+src/
+test/
+test-server/
+docs/
+
+# Config files
+.husky/
+.github/
+.vscode/
+.idea/
+.history/
+*.config.ts
+.eslintrc*
+.prettierrc*
+.stylelintrc*
+.lintstagedrc
+.gitignore
+.npmignore
+
+# Build tools
+vite.config.ts
+tsconfig.json
+
+# Tests
+coverage/
+*.test.ts
+*.spec.ts
+
+# Logs
+logs/
+*.log
+
+# Development
+node_modules/
+.env*
+*.local 

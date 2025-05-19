@@ -70,12 +70,16 @@ class AITextArea extends HTMLElement {
     return [
       "value",
       "placeholder",
+      "placeholder-style",
+      "suggestion-style",
       "disabled",
       "readonly",
       "required",
       "autofocus",
       "name",
       "prompt",
+      "disableAI",
+      "apiUrl",
     ];
   }
 
@@ -87,7 +91,8 @@ class AITextArea extends HTMLElement {
     this.appendChild(this.editableDiv);
 
     // 初始化补全提供者
-    this.completionProvider = new DefaultCompletionProvider();
+    const apiUrl = this.getAttribute("apiUrl") || "";
+    this.completionProvider = new DefaultCompletionProvider(apiUrl);
 
     // 绑定事件处理器
     this.editableDiv.addEventListener("input", this.handleInput.bind(this));
@@ -127,7 +132,13 @@ class AITextArea extends HTMLElement {
 
     switch (name) {
       case "placeholder":
+      case "placeholder-style":
         if (this.editableDiv.textContent === "") {
+          // 如果是 placeholder-style 变化，需要先清除现有的 placeholder
+          if (name === "placeholder-style" && this.placeholderSpan) {
+            this.placeholderSpan.remove();
+            this.placeholderSpan = null;
+          }
           this.showPlaceholderIfEmpty();
         }
         break;
@@ -154,7 +165,23 @@ class AITextArea extends HTMLElement {
       if (!this.placeholderSpan) {
         this.placeholderSpan = document.createElement("span");
         this.placeholderSpan.className = "ai-textarea-placeholder";
-        this.placeholderSpan.style.color = "#999";
+
+        // 应用自定义占位符样式
+        const placeholderStyle = this.getAttribute("placeholder-style");
+        if (placeholderStyle) {
+          try {
+            const styleObj = JSON.parse(placeholderStyle);
+            Object.assign(this.placeholderSpan.style, styleObj);
+          } catch (e) {
+            console.error("Error parsing placeholder-style:", e);
+            // 默认样式
+            this.placeholderSpan.style.color = "#999";
+          }
+        } else {
+          // 默认样式
+          this.placeholderSpan.style.color = "#999";
+        }
+
         this.placeholderSpan.textContent =
           this.getAttribute("placeholder") || "";
         this.editableDiv.appendChild(this.placeholderSpan);
@@ -234,6 +261,32 @@ class AITextArea extends HTMLElement {
     }
   }
 
+  get apiUrl(): string {
+    return this.getAttribute("apiUrl") || "";
+  }
+
+  set apiUrl(val: string) {
+    if (val) {
+      this.setAttribute("apiUrl", val);
+      this.completionProvider = new DefaultCompletionProvider(val);
+    } else {
+      this.removeAttribute("apiUrl");
+    }
+  }
+
+  get disableAI(): boolean {
+    return this.hasAttribute("disableAI");
+  }
+
+  set disableAI(val: boolean) {
+    if (val) {
+      this.setAttribute("disableAI", "");
+      this.clearSuggestion();
+    } else {
+      this.removeAttribute("disableAI");
+    }
+  }
+
   // 代理方法
   focus() {
     this.editableDiv.focus();
@@ -279,8 +332,8 @@ class AITextArea extends HTMLElement {
   }
 
   private debouncedComplete = debounce(
-    async (preContent: string, subContent: string, cursorPosition: number) => {
-      if (this.isProcessingCompletion) return;
+    async (preContent: string, subContent: string, _cursorPosition: number) => {
+      if (this.isProcessingCompletion || this.disableAI) return;
 
       try {
         this.isProcessingCompletion = true;
@@ -346,7 +399,7 @@ class AITextArea extends HTMLElement {
     return result;
   }
 
-  private handleCursorChange = debounce((event?: Event) => {
+  private handleCursorChange = debounce((_event?: Event) => {
     const { position } = this.getCursorPosition();
     if (position === this.lastCursorPosition) return;
 
@@ -383,7 +436,7 @@ class AITextArea extends HTMLElement {
     };
   }
 
-  private async handleInput(event: Event) {
+  private async handleInput(_event: Event) {
     if (this.placeholderSpan) {
       this.placeholderSpan.remove();
       this.placeholderSpan = null;
@@ -428,6 +481,18 @@ class AITextArea extends HTMLElement {
     this.suggestionSpan.className = "ai-textarea-suggestion";
     this.suggestionSpan.dataset.suggestion = suggestion;
 
+    // 应用自定义建议样式
+    const suggestionStyle = this.getAttribute("suggestion-style");
+    if (suggestionStyle) {
+      try {
+        const styleObj = JSON.parse(suggestionStyle);
+        Object.assign(this.suggestionSpan.style, styleObj);
+      } catch (e) {
+        console.error("Error parsing suggestion-style:", e);
+        // 默认样式在 CSS 中定义
+      }
+    }
+
     // 确保在正确的位置插入建议
     if (node.nodeType === Node.TEXT_NODE) {
       const textNode = node as Text;
@@ -460,16 +525,13 @@ class AITextArea extends HTMLElement {
     const suggestion = this.suggestionSpan.dataset.suggestion || "";
     const textNode = document.createTextNode(suggestion);
 
-    // 保存当前光标位置的引用节点
     const nextSibling = this.suggestionSpan.nextSibling;
     const parentNode = this.suggestionSpan.parentNode;
-
     // 替换建议span为实际文本
     this.suggestionSpan.parentNode?.insertBefore(textNode, this.suggestionSpan);
     this.suggestionSpan.remove();
     this.suggestionSpan = null;
 
-    // 设置光标位置到插入的文本之后
     if (parentNode) {
       const range = document.createRange();
       range.setStartAfter(textNode);

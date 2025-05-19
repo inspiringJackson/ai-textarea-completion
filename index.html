@@ -21,6 +21,43 @@
         border: 1px solid #dcdfe6;
         width: 200px;
       }
+      .style-control {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+      }
+      .style-control h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+      .style-control .form-group {
+        margin-bottom: 10px;
+      }
+      .style-control label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .style-control input,
+      .style-control select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #dcdfe6;
+      }
+      .apply-btn {
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #409eff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .apply-btn:hover {
+        background-color: #3a8ee6;
+      }
     </style>
   </head>
   <body>
@@ -34,10 +71,69 @@
           <option value="写一篇博客文章，语言要轻松活泼">博客模式</option>
           <option value="写一封商务邮件，语言要专业礼貌">商务邮件模式</option>
         </select>
+        <label style="margin-left: 20px">
+          <input
+            type="checkbox"
+            id="aiToggle"
+            onchange="toggleAI(this.checked)"
+          />
+          禁用AI补全
+        </label>
       </div>
+
+      <div class="style-control">
+        <h3>自定义样式设置</h3>
+        <div class="form-group">
+          <label>占位符文本样式：</label>
+          <select
+            id="placeholderStylePreset"
+            onchange="selectPlaceholderPreset(this.value)"
+          >
+            <option value="">选择预设样式</option>
+            <option value="default">默认样式</option>
+            <option value="highlight">高亮样式</option>
+            <option value="subtle">淡色样式</option>
+            <option value="italic">斜体样式</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>占位符样式配置 (JSON)：</label>
+          <input
+            type="text"
+            id="placeholderStyle"
+            value='{"color": "#999", "fontStyle": "normal"}'
+          />
+        </div>
+        <div class="form-group">
+          <label>补全建议文本样式：</label>
+          <select
+            id="suggestionStylePreset"
+            onchange="selectSuggestionPreset(this.value)"
+          >
+            <option value="">选择预设样式</option>
+            <option value="default">默认样式</option>
+            <option value="highlight">高亮样式</option>
+            <option value="bold">粗体样式</option>
+            <option value="colorful">彩色样式</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>补全建议样式配置 (JSON)：</label>
+          <input
+            type="text"
+            id="suggestionStyle"
+            value='{"color": "#666", "fontStyle": "italic", "backgroundColor": "#f5f5f5"}'
+          />
+        </div>
+        <button class="apply-btn" onclick="applyStyles()">应用样式</button>
+      </div>
+
       <ai-textarea
         id="aiTextarea"
         placeholder="在这里开始输入内容..."
+        placeholder-style='{"color": "#999", "fontStyle": "normal"}'
+        apiUrl="http://localhost:3000/api/complete"
+        suggestion-style='{"color": "#666", "fontStyle": "italic", "backgroundColor": "#f5f5f5"}'
       ></ai-textarea>
     </div>
     <script type="module" src="/src/index.ts"></script>
@@ -45,6 +141,83 @@
       function updatePrompt(value) {
         const textarea = document.getElementById("aiTextarea");
         textarea.setAttribute("prompt", value);
+      }
+
+      function toggleAI(disabled) {
+        const textarea = document.getElementById("aiTextarea");
+        if (disabled) {
+          textarea.setAttribute("disableAI", "");
+        } else {
+          textarea.removeAttribute("disableAI");
+        }
+      }
+
+      function selectPlaceholderPreset(preset) {
+        let styleJSON = "";
+        switch (preset) {
+          case "default":
+            styleJSON = '{"color": "#999", "fontStyle": "normal"}';
+            break;
+          case "highlight":
+            styleJSON = '{"color": "#1890ff", "fontWeight": "bold"}';
+            break;
+          case "subtle":
+            styleJSON =
+              '{"color": "#ccc", "fontStyle": "normal", "opacity": "0.8"}';
+            break;
+          case "italic":
+            styleJSON = '{"color": "#888", "fontStyle": "italic"}';
+            break;
+          default:
+            return;
+        }
+        document.getElementById("placeholderStyle").value = styleJSON;
+      }
+
+      function selectSuggestionPreset(preset) {
+        let styleJSON = "";
+        switch (preset) {
+          case "default":
+            styleJSON =
+              '{"color": "#666", "fontStyle": "italic", "backgroundColor": "#f5f5f5"}';
+            break;
+          case "highlight":
+            styleJSON =
+              '{"color": "#333", "backgroundColor": "#e6f7ff", "fontWeight": "bold", "padding": "0 2px"}';
+            break;
+          case "bold":
+            styleJSON =
+              '{"color": "#888", "fontWeight": "bold", "backgroundColor": "transparent"}';
+            break;
+          case "colorful":
+            styleJSON =
+              '{"color": "#722ed1", "fontStyle": "italic", "textDecoration": "underline", "backgroundColor": "#f9f0ff"}';
+            break;
+          default:
+            return;
+        }
+        document.getElementById("suggestionStyle").value = styleJSON;
+      }
+
+      function applyStyles() {
+        try {
+          const textarea = document.getElementById("aiTextarea");
+          const placeholderStyle =
+            document.getElementById("placeholderStyle").value;
+          const suggestionStyle =
+            document.getElementById("suggestionStyle").value;
+
+          // 验证JSON格式
+          JSON.parse(placeholderStyle);
+          JSON.parse(suggestionStyle);
+
+          textarea.setAttribute("placeholder-style", placeholderStyle);
+          textarea.setAttribute("suggestion-style", suggestionStyle);
+
+          alert("样式应用成功！");
+        } catch (e) {
+          alert("样式格式错误，请检查JSON格式：" + e.message);
+        }
       }
     </script>
   </body>

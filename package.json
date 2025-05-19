@@ -1,12 +1,39 @@
 {
-  "name": "vite-vanilla-ts-lib-starter",
-  "private": true,
+  "name": "ai-textarea-completion",
+  "private": false,
   "version": "0.0.5",
-  "module": "./dist/vite-vanilla-ts-lib-starter.js",
+  "description": "An AI-powered textarea component with intelligent text completion",
+  "keywords": [
+    "ai",
+    "textarea",
+    "completion",
+    "autocomplete",
+    "react",
+    "vue",
+    "component"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inspiringJackson/ai-textarea-completion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inspiringJackson/ai-textarea-completion/issues"
+  },
+  "homepage": "https://github.com/inspiringJackson/ai-textarea-completion#readme",
+  "module": "./dist/ai-textarea-completion.js",
+  "main": "./dist/ai-textarea-completion.umd.js",
   "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
   "exports": {
     ".": {
-      "import": "./dist/vite-vanilla-ts-lib-starter.js"
+      "import": "./dist/ai-textarea-completion.js",
+      "require": "./dist/ai-textarea-completion.umd.js"
     },
     "./dist/": {
       "import": "./dist/"
@@ -15,7 +42,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite --host",
-    "build": "rimraf build/**/* && tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts && copyfiles ./package.json build",
+    "build": "rimraf dist && tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts && copyfiles ./package.json dist",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "lint:scripts": "eslint . --ext .ts",
