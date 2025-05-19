@@ -5,12 +5,47 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI TextArea Demo</title>
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .prompt-selector {
+        margin-bottom: 20px;
+      }
+      .prompt-selector select {
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #dcdfe6;
+        width: 200px;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
+    <div id="app" class="container">
       <h1>AI TextArea Demo</h1>
-      <ai-textarea placeholder="hello"></ai-textarea>
+      <div class="prompt-selector">
+        <select id="promptSelector" onchange="updatePrompt(this.value)">
+          <option value="">默认模式</option>
+          <option value="写一份正式的申请书，语言要正式严谨">申请书模式</option>
+          <option value="写一篇技术文档，要专业且易懂">技术文档模式</option>
+          <option value="写一篇博客文章，语言要轻松活泼">博客模式</option>
+          <option value="写一封商务邮件，语言要专业礼貌">商务邮件模式</option>
+        </select>
+      </div>
+      <ai-textarea
+        id="aiTextarea"
+        placeholder="在这里开始输入内容..."
+      ></ai-textarea>
     </div>
     <script type="module" src="/src/index.ts"></script>
+    <script>
+      function updatePrompt(value) {
+        const textarea = document.getElementById("aiTextarea");
+        textarea.setAttribute("prompt", value);
+      }
+    </script>
   </body>
 </html>

@@ -1,14 +1,98 @@
-# AI Textarea Completion
+# AI Textarea Completion | AI文本域自动补全
 
-一个支持AI补全功能的textarea Web组件。
+[English](#english) | [中文](#chinese)
+
+<h2 id="english">English</h2>
+
+## Introduction
+AI Textarea Completion is a powerful web component that provides intelligent text completion capabilities. It seamlessly integrates with any web application and offers context-aware suggestions as you type.
+
+## Features
+- 🚀 Real-time AI-powered text completion
+- 💡 Context-aware suggestions
+- 🎨 Customizable writing styles through prompts
+- ⌨️ Natural keyboard interaction
+- 🔧 Easy integration with any web framework
+- 🌐 Cross-browser compatibility
+- 📱 Responsive design
+- 🛠️ Highly customizable
+
+## Installation
+
+```bash
+npm install ai-textarea-completion
+```
+
+## Quick Start
+
+```html
+<!-- Import the component -->
+<script type="module">
+  import 'ai-textarea-completion';
+</script>
+
+<!-- Use it in your HTML -->
+<ai-textarea placeholder="Start typing here..."></ai-textarea>
+```
+
+## Configuration
+
+### Basic Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| placeholder | string | "" | Placeholder text |
+| value | string | "" | Initial text value |
+| prompt | string | "" | AI writing style prompt |
+| disabled | boolean | false | Disable the textarea |
+| readonly | boolean | false | Make the textarea readonly |
+
+### Events
+
+| Event | Description |
+|-------|-------------|
+| input | Triggered when text changes |
+| change | Triggered when text completion is accepted |
+| focus | Triggered when textarea gains focus |
+| blur | Triggered when textarea loses focus |
+
+## API Reference
+
+### Methods
+
+```typescript
+interface AITextArea extends HTMLElement {
+  value: string;
+  prompt: string;
+  focus(): void;
+  blur(): void;
+  select(): void;
+  setSelectionRange(start: number, end: number): void;
+}
+```
+
+## Browser Support
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+---
+
+<h2 id="chinese">中文</h2>
+
+## 简介
+AI文本域自动补全是一个强大的Web组件，提供智能文本补全功能。它可以无缝集成到任何Web应用中，并在您输入时提供上下文感知的建议。
 
 ## 特性
-
-- 基于Web Components，可在任何现代浏览器中使用
-- 支持所有原生textarea属性和方法
-- 支持自定义AI补全提供者
-- 使用Tab键接受补全建议，Esc键取消建议
-- 优雅的补全建议显示
+- 🚀 实时AI驱动的文本补全
+- 💡 上下文感知的建议
+- 🎨 通过提示词自定义写作风格
+- ⌨️ 自然的键盘交互
+- 🔧 易于集成到任何Web框架
+- 🌐 跨浏览器兼容
+- 📱 响应式设计
+- 🛠️ 高度可定制
 
 ## 安装
 
@@ -16,89 +100,59 @@
 npm install ai-textarea-completion
 ```
 
-## 使用方法
-
-### 基本使用
+## 快速开始
 
 ```html
-<ai-textarea placeholder="开始输入..."></ai-textarea>
+<!-- 导入组件 -->
+<script type="module">
+  import 'ai-textarea-completion';
+</script>
+
+<!-- 在HTML中使用 -->
+<ai-textarea placeholder="在这里开始输入..."></ai-textarea>
 ```
 
-### 设置自定义补全提供者
+## 配置
 
-```javascript
-class CustomCompletionProvider {
-  async getCompletion(text, cursorPosition) {
-    // 实现你的补全逻辑
-    return '补全建议';
-  }
+### 基本属性
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| placeholder | string | "" | 占位符文本 |
+| value | string | "" | 初始文本值 |
+| prompt | string | "" | AI写作风格提示词 |
+| disabled | boolean | false | 禁用文本域 |
+| readonly | boolean | false | 设置为只读 |
+
+### 事件
+
+| 事件 | 说明 |
+|------|------|
+| input | 文本变化时触发 |
+| change | 接受文本补全时触发 |
+| focus | 获得焦点时触发 |
+| blur | 失去焦点时触发 |
+
+## API参考
+
+### 方法
+
+```typescript
+interface AITextArea extends HTMLElement {
+  value: string;
+  prompt: string;
+  focus(): void;
+  blur(): void;
+  select(): void;
+  setSelectionRange(start: number, end: number): void;
 }
-
-const textarea = document.querySelector('ai-textarea');
-textarea.setCompletionProvider(new CustomCompletionProvider());
 ```
 
-## 后端服务配置
+## 浏览器支持
+- Chrome (最新版)
+- Firefox (最新版)
+- Safari (最新版)
+- Edge (最新版)
 
-1. 进入test-server目录：
-```bash
-cd test-server
-```
-
-2. 安装依赖：
-```bash
-npm install
-```
-
-3. 复制环境变量配置文件：
-```bash
-cp .env.example .env
-```
-
-4. 编辑.env文件，设置你的OpenAI API密钥：
-```env
-OPENAI_API_KEY=your_api_key_here
-```
-
-5. 启动服务：
-```bash
-npm run dev
-```
-
-## 事件
-
-组件会触发以下自定义事件：
-
-- `input`: 当文本内容变化时触发
-  ```javascript
-  textarea.addEventListener('input', (e) => {
-    console.log('当前值：', e.detail.value);
-    console.log('光标位置：', e.detail.cursorPosition);
-  });
-  ```
-
-## 开发
-
-1. 克隆仓库：
-```bash
-git clone [repository-url]
-cd ai-textarea-completion
-```
-
-2. 安装依赖：
-```bash
-npm install
-```
-
-3. 启动开发服务器：
-```bash
-npm run dev
-```
-
-## 贡献
-
-欢迎提交Issue和Pull Request！
-
-## 许可
-
+## License | 许可证
 MIT
