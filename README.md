@@ -6,7 +6,7 @@
 
 ## Introduction
 
-AI Textarea Completion is a powerful web component that provides intelligent text completion capabilities. It seamlessly integrates with any web application and offers context-aware suggestions as you type.
+AI Textarea Completion is a powerful web component that provides intelligent text completion capabilities. It seamlessly integrates with any web application and offers context-aware suggestions as you type. The supported language model has been tested: [Doubao](https://console.volcengine.com/ark/region:ark+cn-beijing/model/detail?Id=doubao-lite-32k).
 
 ## Features
 
@@ -73,11 +73,18 @@ interface AITextArea extends HTMLElement {
 }
 ```
 
+## More Information
+- [Backend example (Node.js)](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/BACKEND_SETUP.md)
+- [Develop?](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/PLUGIN_DEVELOPMENT_GUIDE.md)
+- [Contribute?](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/CONTRIBUTING.md)
+- [Integrate?](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/INTEGRATION_FLOWCHART.md)
+- [Performance checklist](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/PERFORMANCE_CHECKLIST.md)
+
 ## Browser Support
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
+- Chrome (latest) (To be tested)
+- Firefox (latest) (To be tested)
+- Safari (latest) (To be tested)
 - Edge (latest)
 
 ---
@@ -86,7 +93,7 @@ interface AITextArea extends HTMLElement {
 
 ## 简介
 
-AI文本域自动补全是一个强大的Web组件，提供智能文本补全功能。它可以无缝集成到任何Web应用中，并在您输入时提供上下文感知的建议。
+AI文本域自动补全是一个强大的Web组件，提供智能文本补全功能。它可以无缝集成到任何Web应用中，并在您输入时提供上下文感知的建议。目前已测试支持的大模型：[豆包](https://console.volcengine.com/ark/region:ark+cn-beijing/model/detail?Id=doubao-lite-32k)。
 
 ## 特性
 
@@ -153,11 +160,18 @@ interface AITextArea extends HTMLElement {
 }
 ```
 
+## 更多信息
+- [后端例子(Node.js)](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/BACKEND_SETUP.md)
+- [开发](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/PLUGIN_DEVELOPMENT_GUIDE.md)
+- [贡献](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/CONTRIBUTING.md)
+- [接入](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/INTEGRATION_FLOWCHART.md)
+- [性能清单](https://github.com/inspiringJackson/ai-textarea-completion/blob/master/docs/PERFORMANCE_CHECKLIST.md)
+
 ## 浏览器支持
 
-- Chrome (最新版)
-- Firefox (最新版)
-- Safari (最新版)
+- Chrome (最新版) (待测试)
+- Firefox (最新版) (待测试)
+- Safari (最新版) (待测试)
 - Edge (最新版)
 
 ## License | 许可证
