@@ -1,7 +1,7 @@
 {
   "name": "ai-textarea-completion",
   "private": false,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An AI-powered textarea component with intelligent text completion",
   "keywords": [
     "ai",

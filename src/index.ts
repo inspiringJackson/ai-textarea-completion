@@ -4,63 +4,6 @@ import { DeviceDetector } from "./utils/deviceDetector";
 import { CompletionProvider, StyleConfig } from "./types";
 import { DefaultCompletionProvider } from "./providers/DefaultCompletionProvider";
 
-// 防抖函数
-function debounce<T extends (...args: any[]) => any>(
-  fn: T,
-  delay: number
-): (...args: Parameters<T>) => void {
-  let timer: number | null = null;
-  return function (this: any, ...args: Parameters<T>) {
-    if (timer) clearTimeout(timer);
-    timer = window.setTimeout(() => {
-      fn.apply(this, args);
-      timer = null;
-    }, delay);
-  };
-}
-
-interface CompletionProvider {
-  getCompletion(
-    preContent: string,
-    subContent: string,
-    prompt?: string
-  ): Promise<string>;
-}
-
-class DefaultCompletionProvider implements CompletionProvider {
-  private apiUrl: string;
-
-  constructor(apiUrl: string = "http://localhost:3000/api/complete") {
-    this.apiUrl = apiUrl;
-  }
-
-  async getCompletion(
-    preContent: string,
-    subContent: string,
-    prompt?: string
-  ): Promise<string> {
-    try {
-      const response = await fetch(this.apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ preContent, subContent, prompt }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data.suggestion;
-    } catch (error) {
-      console.error("Error getting completion:", error);
-      throw error;
-    }
-  }
-}
-
 class AITextArea extends HTMLElement {
   private editableDiv: HTMLDivElement;
   private completionProvider: CompletionProvider;
@@ -561,7 +504,6 @@ class AITextArea extends HTMLElement {
     const suggestion = this.suggestionSpan.dataset.suggestion || "";
     const textNode = document.createTextNode(suggestion);
 
-    const nextSibling = this.suggestionSpan.nextSibling;
     const parentNode = this.suggestionSpan.parentNode;
     // 替换建议span为实际文本
     this.suggestionSpan.parentNode?.insertBefore(textNode, this.suggestionSpan);

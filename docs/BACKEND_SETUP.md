@@ -40,12 +40,12 @@ ARK_MODEL=your-model-name
 
 ### Environment Variables Explanation
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| PORT | Server port number | No |
-| ARK_API_KEY | Your API key | Yes |
-| ARK_BASE_URL | API endpoint URL | No |
-| ARK_MODEL | Model identifier | No |
+| Variable     | Description        | Required |
+| ------------ | ------------------ | -------- |
+| PORT         | Server port number | No       |
+| ARK_API_KEY  | Your API key       | Yes      |
+| ARK_BASE_URL | API endpoint URL   | No       |
+| ARK_MODEL    | Model identifier   | No       |
 
 ### Starting the Server
 
@@ -143,23 +143,24 @@ ARK_MODEL=你的模型名称
 ### 环境变量说明
 
 <<<<<<< HEAD
-| 变量           | 说明               | 是否必需 | 默认值                                   |
+| 变量 | 说明 | 是否必需 | 默认值 |
 | -------------- | ------------------ | -------- | ---------------------------------------- |
-| PORT           | 服务器端口号       | 否       | 3000                                     |
-| ARK_API_KEY    | 你的API密钥        | 是       | -                                        |
-| ARK_BASE_URL   | API端点URL         | 否       | https://ark.cn-beijing.volces.com/api/v3 |
-| ARK_MODEL      | 模型标识符         | 否       | doubao-1-5-lite-32k-250115               |
-| NODE_ENV       | 环境模式           | 否       | development                              |
-| RATE_LIMIT     | 每分钟请求数       | 否       | 100                                      |
-| CACHE_DURATION | 缓存持续时间（秒） | 否       | 3600                                     |
+| PORT | 服务器端口号 | 否 | 3000 |
+| ARK_API_KEY | 你的API密钥 | 是 | - |
+| ARK_BASE_URL | API端点URL | 否 | https://ark.cn-beijing.volces.com/api/v3 |
+| ARK_MODEL | 模型标识符 | 否 | doubao-1-5-lite-32k-250115 |
+| NODE_ENV | 环境模式 | 否 | development |
+| RATE_LIMIT | 每分钟请求数 | 否 | 100 |
+| CACHE_DURATION | 缓存持续时间（秒） | 否 | 3600 |
 =======
-| 变量 | 说明 | 是否必需 | 
+| 变量 | 说明 | 是否必需 |
 |----------|-------------|----------|
 | PORT | 服务器端口号 | 否 |
 | ARK_API_KEY | 你的API密钥 | 是 |
 | ARK_BASE_URL | API端点URL | 否 |
 | ARK_MODEL | 模型标识符 | 否 |
->>>>>>> 26ef42d8f4fb8e4ee43e74cf3cb9c0b3a89e3a92
+
+> > > > > > > 26ef42d8f4fb8e4ee43e74cf3cb9c0b3a89e3a92
 
 ### 启动服务器
 
@@ -214,8 +215,7 @@ Content-Type: application/json
 2. 使用CORS保护
 3. 实现速率限制
 4. 验证所有输入
-<<<<<<< HEAD
-5. 使用安全头部
-=======
-5. 使用安全头部 
->>>>>>> 26ef42d8f4fb8e4ee43e74cf3cb9c0b3a89e3a92
+   <<<<<<< HEAD
+5. # 使用安全头部
+6. 使用安全头部
+   > > > > > > > 26ef42d8f4fb8e4ee43e74cf3cb9c0b3a89e3a92
