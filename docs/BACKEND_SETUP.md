@@ -36,24 +36,16 @@ PORT=3000
 ARK_API_KEY=your_api_key_here
 ARK_BASE_URL=https://your-api-endpoint.com/v1
 ARK_MODEL=your-model-name
-
-# Optional Settings
-NODE_ENV=development
-RATE_LIMIT=100
-CACHE_DURATION=3600
 ```
 
 ### Environment Variables Explanation
 
-| Variable       | Description               | Required | Default                                  |
-| -------------- | ------------------------- | -------- | ---------------------------------------- |
-| PORT           | Server port number        | No       | 3000                                     |
-| ARK_API_KEY    | Your API key              | Yes      | -                                        |
-| ARK_BASE_URL   | API endpoint URL          | No       | https://ark.cn-beijing.volces.com/api/v3 |
-| ARK_MODEL      | Model identifier          | No       | doubao-1-5-lite-32k-250115               |
-| NODE_ENV       | Environment mode          | No       | development                              |
-| RATE_LIMIT     | Requests per minute       | No       | 100                                      |
-| CACHE_DURATION | Cache duration in seconds | No       | 3600                                     |
+| Variable | Description | Required |
+|----------|-------------|----------|
+| PORT | Server port number | No |
+| ARK_API_KEY | Your API key | Yes |
+| ARK_BASE_URL | API endpoint URL | No |
+| ARK_MODEL | Model identifier | No |
 
 ### Starting the Server
 
@@ -104,7 +96,7 @@ The server implements the following error handling:
 
 ### Security Best Practices
 
-1. Never commit `.env` files
+1. **Never commit `.env` files**
 2. Use CORS protection
 3. Implement rate limiting
 4. Validate all inputs
@@ -146,15 +138,11 @@ PORT=3000
 ARK_API_KEY=你的api密钥
 ARK_BASE_URL=https://你的api端点.com/v1
 ARK_MODEL=你的模型名称
-
-# 可选设置
-NODE_ENV=development
-RATE_LIMIT=100
-CACHE_DURATION=3600
 ```
 
 ### 环境变量说明
 
+<<<<<<< HEAD
 | 变量           | 说明               | 是否必需 | 默认值                                   |
 | -------------- | ------------------ | -------- | ---------------------------------------- |
 | PORT           | 服务器端口号       | 否       | 3000                                     |
@@ -164,6 +152,14 @@ CACHE_DURATION=3600
 | NODE_ENV       | 环境模式           | 否       | development                              |
 | RATE_LIMIT     | 每分钟请求数       | 否       | 100                                      |
 | CACHE_DURATION | 缓存持续时间（秒） | 否       | 3600                                     |
+=======
+| 变量 | 说明 | 是否必需 | 
+|----------|-------------|----------|
+| PORT | 服务器端口号 | 否 |
+| ARK_API_KEY | 你的API密钥 | 是 |
+| ARK_BASE_URL | API端点URL | 否 |
+| ARK_MODEL | 模型标识符 | 否 |
+>>>>>>> 26ef42d8f4fb8e4ee43e74cf3cb9c0b3a89e3a92
 
 ### 启动服务器
 
@@ -214,8 +210,12 @@ Content-Type: application/json
 
 ### 安全最佳实践
 
-1. 永远不要提交`.env`文件
+1. **永远不要提交`.env`文件**
 2. 使用CORS保护
 3. 实现速率限制
 4. 验证所有输入
+<<<<<<< HEAD
 5. 使用安全头部
+=======
+5. 使用安全头部 
+>>>>>>> 26ef42d8f4fb8e4ee43e74cf3cb9c0b3a89e3a92
