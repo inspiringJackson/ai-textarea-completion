@@ -30,18 +30,21 @@ Thank you for your interest in contributing to AI Textarea Completion! This docu
 ### Development Process
 
 1. **Setup Development Environment**
+
    ```bash
    npm install
    npm run dev
    ```
 
 2. **Code Style**
+
    - Follow TypeScript best practices
    - Use ESLint and Prettier
    - Maintain consistent naming conventions
    - Write clear comments
 
 3. **Testing**
+
    - Write unit tests for new features
    - Ensure all tests pass
    - Add integration tests if needed
@@ -56,12 +59,14 @@ Thank you for your interest in contributing to AI Textarea Completion! This docu
 ### Pull Request Process
 
 1. **Before Submitting**
+
    - Ensure code passes all tests
    - Update documentation
    - Add changelog entry
    - Rebase on main branch
 
 2. **PR Guidelines**
+
    - Use clear, descriptive titles
    - Provide detailed descriptions
    - Reference related issues
@@ -110,18 +115,21 @@ Thank you for your interest in contributing to AI Textarea Completion! This docu
 ### 开发流程
 
 1. **设置开发环境**
+
    ```bash
    npm install
    npm run dev
    ```
 
 2. **代码风格**
+
    - 遵循TypeScript最佳实践
    - 使用ESLint和Prettier
    - 保持一致的命名规范
    - 编写清晰的注释
 
 3. **测试**
+
    - 为新功能编写单元测试
    - 确保所有测试通过
    - 必要时添加集成测试
@@ -136,12 +144,14 @@ Thank you for your interest in contributing to AI Textarea Completion! This docu
 ### Pull Request流程
 
 1. **提交前**
+
    - 确保代码通过所有测试
    - 更新文档
    - 添加更新日志条目
    - 在主分支上变基
 
 2. **PR指南**
+
    - 使用清晰、描述性的标题
    - 提供详细描述
    - 引用相关问题
@@ -158,4 +168,4 @@ Thank you for your interest in contributing to AI Textarea Completion! This docu
 1. 版本号遵循语义化版本
 2. 更新CHANGELOG.md
 3. 创建发布说明
-4. 适当标记发布 
+4. 适当标记发布

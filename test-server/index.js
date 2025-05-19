@@ -1,7 +1,7 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const OpenAI = require('openai');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const OpenAI = require("openai");
 
 const app = express();
 app.use(cors());
@@ -9,21 +9,22 @@ app.use(express.json());
 
 // 初始化OpenAI客户端
 const openai = new OpenAI({
-    baseURL: process.env.ARK_BASE_URL || 'https://ark.cn-beijing.volces.com/api/v3',
-    apiKey: process.env.ARK_API_KEY,
+  baseURL:
+    process.env.ARK_BASE_URL || "https://ark.cn-beijing.volces.com/api/v3",
+  apiKey: process.env.ARK_API_KEY,
 });
 
 // 补全接口
-app.post('/api/complete', async (req, res) => {
-    try {
-        const { preContent, subContent, prompt } = req.body;
+app.post("/api/complete", async (req, res) => {
+  try {
+    const { preContent, subContent, prompt } = req.body;
 
-        const completion = await openai.chat.completions.create({
-            model: process.env.ARK_MODEL || 'doubao-1-5-lite-32k-250115',
-            messages: [
-                {
-                    role: 'system',
-                    content: `# 角色
+    const completion = await openai.chat.completions.create({
+      model: process.env.ARK_MODEL || "doubao-1-5-lite-32k-250115",
+      messages: [
+        {
+          role: "system",
+          content: `# 角色
 你是大文豪，能创作所有风格的内容，现在你要专注于根据上下文推测*光标位置*需要补全的内容。现在你正在按照${prompt}进行创作。
 
 # 任务要求
@@ -45,28 +46,28 @@ app.post('/api/complete', async (req, res) => {
 "上下文：'昨天天气很好，我们*光标位置*'
 补全内容：'一起出去游玩了。'",
 "上下文：'The curious cat quietly*光标位置* to catch a colorful butterfly.'
-补全内容：' climbed the crooked fence'"]`
-                },
-                {
-                    role: 'user',
-                    content: preContent + '*光标位置*' + subContent
-                }
-            ],
-            max_tokens: 100,
-            temperature: 0.7,
-            n: 1,
-            stream: false,
-        });
+补全内容：' climbed the crooked fence'"]`,
+        },
+        {
+          role: "user",
+          content: preContent + "*光标位置*" + subContent,
+        },
+      ],
+      max_tokens: 100,
+      temperature: 0.7,
+      n: 1,
+      stream: false,
+    });
 
-        const suggestion = completion.choices[0].message.content.trim();
-        res.json({ suggestion });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: error.message });
-    }
+    const suggestion = completion.choices[0].message.content.trim();
+    res.json({ suggestion });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
