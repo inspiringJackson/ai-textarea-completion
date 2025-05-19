@@ -1,4 +1,8 @@
 import "./style.css";
+import { debounce } from "./utils/debounce";
+import { DeviceDetector } from "./utils/deviceDetector";
+import { CompletionProvider, StyleConfig } from "./types";
+import { DefaultCompletionProvider } from "./providers/DefaultCompletionProvider";
 
 // 防抖函数
 function debounce<T extends (...args: any[]) => any>(
@@ -64,6 +68,7 @@ class AITextArea extends HTMLElement {
   private isProcessingCompletion = false;
   private lastCursorPosition: number = 0;
   private placeholderSpan: HTMLSpanElement | null = null;
+  private deviceDetector: DeviceDetector;
 
   // 定义需要观察的属性
   static get observedAttributes() {
@@ -90,6 +95,9 @@ class AITextArea extends HTMLElement {
     this.editableDiv.contentEditable = "true";
     this.appendChild(this.editableDiv);
 
+    // 初始化设备检测器
+    this.deviceDetector = DeviceDetector.getInstance();
+
     // 初始化补全提供者
     const apiUrl = this.getAttribute("apiUrl") || "";
     this.completionProvider = new DefaultCompletionProvider(apiUrl);
@@ -109,21 +117,62 @@ class AITextArea extends HTMLElement {
       "mouseup",
       this.handleCursorChange.bind(this)
     );
+
+    // 移动端特定事件
+    if (this.deviceDetector.isMobile) {
+      this.editableDiv.addEventListener(
+        "compositionend",
+        this.handleCompositionEnd.bind(this)
+      );
+    }
+
     this.editableDiv.addEventListener("blur", () => {
       this.clearSuggestion();
       this.showPlaceholderIfEmpty();
     });
+
     this.editableDiv.addEventListener("focus", () => {
       if (this.placeholderSpan && this.editableDiv.textContent === "") {
         this.placeholderSpan.remove();
         this.placeholderSpan = null;
       }
-      // 获得焦点时也检查光标位置
       this.handleCursorChange();
     });
 
     // 初始化显示placeholder
     this.showPlaceholderIfEmpty();
+  }
+
+  // 处理移动端输入法完成事件
+  private handleCompositionEnd(event: CompositionEvent) {
+    if (this.suggestionSpan && event.data.endsWith(" ")) {
+      this.acceptSuggestion();
+      // 移除额外的空格
+      const textContent = this.editableDiv.textContent || "";
+      if (textContent.endsWith("  ")) {
+        this.editableDiv.textContent = textContent.slice(0, -1);
+      }
+    }
+  }
+
+  private handleKeyDown(event: KeyboardEvent) {
+    if (this.suggestionSpan) {
+      if (this.deviceDetector.isMobile) {
+        // 移动端：空格键确认补全
+        if (event.key === " ") {
+          event.preventDefault();
+          this.acceptSuggestion();
+        }
+      } else {
+        // PC端：Tab键确认补全
+        if (event.key === "Tab") {
+          event.preventDefault();
+          this.acceptSuggestion();
+        } else {
+          this.clearSuggestion();
+        }
+      }
+    }
   }
 
   // 属性变化时的回调
@@ -170,15 +219,13 @@ class AITextArea extends HTMLElement {
         const placeholderStyle = this.getAttribute("placeholder-style");
         if (placeholderStyle) {
           try {
-            const styleObj = JSON.parse(placeholderStyle);
+            const styleObj = JSON.parse(placeholderStyle) as StyleConfig;
             Object.assign(this.placeholderSpan.style, styleObj);
           } catch (e) {
             console.error("Error parsing placeholder-style:", e);
-            // 默认样式
             this.placeholderSpan.style.color = "#999";
           }
         } else {
-          // 默认样式
           this.placeholderSpan.style.color = "#999";
         }
 
@@ -456,15 +503,6 @@ class AITextArea extends HTMLElement {
     this.debouncedComplete(beforeCursor, afterCursor, cursorPosition);
   }
 
-  private handleKeyDown(event: KeyboardEvent) {
-    if (event.key === "Tab" && this.suggestionSpan) {
-      event.preventDefault();
-      this.acceptSuggestion();
-    } else {
-      this.clearSuggestion();
-    }
-  }
-
   private showSuggestion(suggestion: string) {
     this.clearSuggestion();
 
@@ -485,11 +523,10 @@ class AITextArea extends HTMLElement {
     const suggestionStyle = this.getAttribute("suggestion-style");
     if (suggestionStyle) {
       try {
-        const styleObj = JSON.parse(suggestionStyle);
+        const styleObj = JSON.parse(suggestionStyle) as StyleConfig;
         Object.assign(this.suggestionSpan.style, styleObj);
       } catch (e) {
         console.error("Error parsing suggestion-style:", e);
-        // 默认样式在 CSS 中定义
       }
     }
 
@@ -498,7 +535,6 @@ class AITextArea extends HTMLElement {
       const textNode = node as Text;
       const offset = range.startOffset;
 
-      // 如果在文本节点中间，需要分割节点
       if (offset < textNode.textContent!.length) {
         const afterNode = textNode.splitText(offset);
         textNode.parentNode!.insertBefore(this.suggestionSpan, afterNode);
